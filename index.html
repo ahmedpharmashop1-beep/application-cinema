@@ -15,6 +15,13 @@
                 <i class="fas fa-film" aria-hidden="true"></i>
                 <h1>Cinéma Moderne</h1>
             </div>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Basculer le thème">
+                    <i class="fas fa-moon"></i>
+                    <span>Thème</span>
+                </button>
+            </div>
             
             <div class="search-container">
                 <label for="searchInput" class="sr-only">Rechercher un film</label>
@@ -29,19 +36,34 @@
                     <span>Rechercher</span>
                 </button>
             </div>
+
+            <div class="controls-row">
+                <nav class="filter-buttons" aria-label="Filtres par genre">
+                    <button class="filter-btn active" data-filter="all" aria-pressed="true">Tous les films</button>
+                    <button class="filter-btn" data-filter="favorites" aria-pressed="false">Favoris</button>
+                    <button class="filter-btn" data-filter="action" aria-pressed="false">Action</button>
+                    <button class="filter-btn" data-filter="drame" aria-pressed="false">Drame</button>
+                    <button class="filter-btn" data-filter="comedie" aria-pressed="false">Comédie</button>
+                    <button class="filter-btn" data-filter="science-fiction" aria-pressed="false">Science-Fiction</button>
+                    <button class="filter-btn" data-filter="aventure" aria-pressed="false">Aventure</button>
+                </nav>
+
+                <div class="sort-control">
+                    <label for="sortSelect" class="sr-only">Trier les films</label>
+                    <select id="sortSelect" class="sort-select" aria-label="Trier les films">
+                        <option value="popularity.desc">Popularité décroissante</option>
+                        <option value="vote_average.desc">Note décroissante</option>
+                        <option value="release_date.desc">Année décroissante</option>
+                        <option value="title.asc">Titre A → Z</option>
+                    </select>
+                </div>
+            </div>
             
-            <nav class="filter-buttons" aria-label="Filtres par genre">
-                <button class="filter-btn active" data-filter="all" aria-pressed="true">Tous les films</button>
-                <button class="filter-btn" data-filter="action" aria-pressed="false">Action</button>
-                <button class="filter-btn" data-filter="drame" aria-pressed="false">Drame</button>
-                <button class="filter-btn" data-filter="comedie" aria-pressed="false">Comédie</button>
-                <button class="filter-btn" data-filter="science-fiction" aria-pressed="false">Science-Fiction</button>
-                <button class="filter-btn" data-filter="aventure" aria-pressed="false">Aventure</button>
-            </nav>
         </div>
     </header>
     
     <main class="container">
+        <div id="statusMessage" class="status-message" role="status" aria-live="polite"></div>
         <section class="movies-grid" id="moviesGrid" aria-label="Liste des films">
             <!-- Les cartes de films seront générées dynamiquement ici -->
         </section>
@@ -51,9 +73,32 @@
             <h3>Aucun film trouvé</h3>
             <p>Essayez avec d'autres mots-clés ou filtres</p>
         </div>
+
+        <div class="pagination" id="pagination" aria-label="Pagination des films">
+            <button class="page-btn" id="prevPage" aria-label="Page précédente">Précédent</button>
+            <span class="page-info" id="pageInfo">Page 1</span>
+            <button class="page-btn" id="nextPage" aria-label="Page suivante">Suivant</button>
+        </div>
+
+        <!-- Lecteur vidéo -->
+        <div class="modal" id="playerModal" aria-hidden="true" aria-label="Lecteur vidéo">
+            <div class="modal-backdrop" data-close-modal></div>
+            <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <button class="modal-close" id="modalClose" aria-label="Fermer le lecteur" data-close-modal>
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-body">
+                    <h3 id="modalTitle" class="modal-title">Lecture du film</h3>
+                    <div class="modal-player" id="modalPlayer">
+                        <div class="modal-loader" id="modalLoader"></div>
+                        <iframe id="playerFrame" title="Bande-annonce" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <p class="modal-message" id="modalMessage"></p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

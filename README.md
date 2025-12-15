@@ -38,6 +38,11 @@ L'application utilise un design moderne avec des effets de glassmorphism, des an
 - **Filtres par genre** : Action, Drame, Comédie, Science-Fiction, Aventure
 - **Filtre "Tous les films"** : Affiche l'ensemble de la collection
 - **Combinaison recherche + filtre** : Les deux fonctionnalités fonctionnent simultanément
+- **Données en direct** : Récupération des films (titre, affiche, note) via l'API TMDb
+- **Favoris** : Ajout/retrait via le coeur sur chaque carte, filtre "Favoris"
+- **Tri** : Popularité, note, année, titre
+- **Pagination** : Navigation entre les pages de résultats
+- **Thème** : Basculer clair/sombre (persisté)
 
 ### 🎨 Interface utilisateur
 - **Design moderne** : Effets glassmorphism et gradients subtils
@@ -80,6 +85,12 @@ Aucun prérequis nécessaire ! L'application fonctionne directement dans le navi
    git clone <url-du-repo>
    cd "application cinema"
    ```
+
+2. **Configurer TMDb**
+   - Créez un compte TMDb : https://www.themoviedb.org/
+   - Générez une clé API v3
+   - Ouvrez `app.js` et remplacez `VOTRE_CLE_TMDB` par votre clé dans `const TMDB_API_KEY`
+   - Pour éviter de commit la clé, vous pouvez créer un fichier non versionné et l'importer avant `app.js`, mais sur une app statique la clé reste côté client.
 
 2. **Ouvrir l'application**
    - Ouvrir le fichier `index.html` dans votre navigateur web
