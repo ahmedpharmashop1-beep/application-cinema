@@ -32,6 +32,11 @@ const elements = {
     nextPage: document.getElementById('nextPage'),
     pageInfo: document.getElementById('pageInfo'),
     themeToggle: document.getElementById('themeToggle'),
+    modalTitle: document.getElementById('modalTitle'),
+    modalOverview: document.getElementById('modalOverview'),
+    modalGenres: document.getElementById('modalGenres'),
+    modalPoster: document.getElementById('modalPoster'),
+    modalMeta: document.getElementById('modalMeta'),
     modal: document.getElementById('playerModal'),
     modalLoader: document.getElementById('modalLoader'),
     modalMessage: document.getElementById('modalMessage'),
@@ -317,7 +322,7 @@ function attachCardListeners() {
         const card = event.target.closest('.movie-card');
         if (!card) return;
         const movieId = card.dataset.movieId;
-        if (movieId) playMovie(movieId);
+        if (movieId) openMovieDetails(movieId);
     });
 
     elements.grid.addEventListener('keyup', event => {
@@ -325,7 +330,7 @@ function attachCardListeners() {
         const card = event.target.closest('.movie-card');
         if (!card) return;
         const movieId = card.dataset.movieId;
-        if (movieId) playMovie(movieId);
+        if (movieId) openMovieDetails(movieId);
     });
 }
 
@@ -367,14 +372,17 @@ function updatePagination(totalPages) {
     elements.pageInfo.textContent = `Page ${state.page} / ${totalPages}`;
 }
 
-async function playMovie(movieId) {
+async function openMovieDetails(movieId) {
     openModal();
     setModalLoading(true);
     setModalMessage('');
     elements.playerFrame.src = '';
 
     try {
-        const trailerKey = await getTrailerKey(movieId);
+        const detail = await fetchMovieDetails(movieId);
+        fillModalDetails(detail);
+
+        const trailerKey = pickTrailerKey(detail.videos?.results);
 
         if (!trailerKey) {
             setModalMessage('Bande-annonce indisponible. Recherche d\'une alternative...', false);
@@ -399,16 +407,33 @@ async function playMovie(movieId) {
     }
 }
 
-async function getTrailerKey(movieId) {
-    const data = await fetchFromTMDB(`movie/${movieId}/videos`);
-    const videos = data.results || [];
+async function fetchMovieDetails(movieId) {
+    return fetchFromTMDB(`movie/${movieId}`, { append_to_response: 'videos' });
+}
+
+function fillModalDetails(detail) {
+    const title = detail.title || detail.name || 'Titre indisponible';
+    const year = detail.release_date ? detail.release_date.slice(0, 4) : '—';
+    const runtime = detail.runtime ? `${detail.runtime} min` : '';
+    const rating = detail.vote_average ? `${(detail.vote_average / 2).toFixed(1)}/5` : '';
+    const genres = (detail.genres || []).map(g => g.name);
+    const poster = detail.poster_path ? `${TMDB_IMG_BASE}${detail.poster_path}` : FALLBACK_POSTER;
+
+    elements.modalTitle.textContent = title;
+    elements.modalOverview.textContent = detail.overview || 'Synopsis indisponible pour ce film.';
+    elements.modalPoster.src = poster;
+    elements.modalPoster.alt = `Affiche de ${title}`;
+    elements.modalMeta.textContent = [year, rating, runtime].filter(Boolean).join(' • ');
+    elements.modalGenres.innerHTML = genres.map(g => `<span class="genre">${g}</span>`).join('');
+}
+
+function pickTrailerKey(videos = []) {
     const trailer = videos.find(v =>
         v.site === 'YouTube' &&
         v.type === 'Trailer' &&
         v.official
     ) || videos.find(v => v.site === 'YouTube' && v.type === 'Trailer') ||
         videos.find(v => v.site === 'YouTube');
-
     return trailer?.key || null;
 }
 

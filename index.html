@@ -81,17 +81,29 @@
         </div>
 
         <!-- Lecteur vidéo -->
-        <div class="modal" id="playerModal" aria-hidden="true" aria-label="Lecteur vidéo">
+        <div class="modal" id="playerModal" aria-hidden="true" aria-label="Détails du film et lecteur vidéo">
             <div class="modal-backdrop" data-close-modal></div>
             <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
                 <button class="modal-close" id="modalClose" aria-label="Fermer le lecteur" data-close-modal>
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="modal-body">
-                    <h3 id="modalTitle" class="modal-title">Lecture du film</h3>
-                    <div class="modal-player" id="modalPlayer">
-                        <div class="modal-loader" id="modalLoader"></div>
-                        <iframe id="playerFrame" title="Bande-annonce" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="modal-layout">
+                        <div class="modal-info">
+                            <div class="modal-header">
+                                <img id="modalPoster" class="modal-poster" src="" alt="Affiche du film">
+                                <div class="modal-text">
+                                    <h3 id="modalTitle" class="modal-title">Lecture du film</h3>
+                                    <div class="modal-meta" id="modalMeta"></div>
+                                    <div class="modal-genres" id="modalGenres"></div>
+                                </div>
+                            </div>
+                            <p class="modal-overview" id="modalOverview"></p>
+                        </div>
+                        <div class="modal-player" id="modalPlayer">
+                            <div class="modal-loader" id="modalLoader"></div>
+                            <iframe id="playerFrame" title="Bande-annonce" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
                     </div>
                     <p class="modal-message" id="modalMessage"></p>
                 </div>
