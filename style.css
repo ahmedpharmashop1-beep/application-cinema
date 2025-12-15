@@ -1,16 +1,16 @@
 :root {
-    --bg-primary: #0a0a15;
-    --bg-secondary: #1a1a2e;
-    --bg-tertiary: #16213e;
-    --accent: #e50914;
-    --accent-hover: #ff1a1a;
-    --accent-light: #ff6b6b;
-    --text-primary: #ffffff;
-    --text-secondary: #f0f0f0;
-    --text-muted: #aaa;
-    --border: #2d3047;
-    --shadow: rgba(0, 0, 0, 0.3);
-    --shadow-accent: rgba(229, 9, 20, 0.2);
+    --bg-primary: #080c1c;
+    --bg-secondary: #111a30;
+    --bg-tertiary: #0e1428;
+    --accent: #ff335f;
+    --accent-hover: #ff4f78;
+    --accent-light: #ff7b9a;
+    --text-primary: #f8fbff;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #1f2942;
+    --shadow: rgba(0, 0, 0, 0.35);
+    --shadow-accent: rgba(255, 51, 95, 0.18);
     --radius: 16px;
     --radius-sm: 12px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -24,7 +24,9 @@
 
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    background: radial-gradient(circle at 20% 20%, rgba(255,51,95,0.12), transparent 32%),
+                radial-gradient(circle at 80% 10%, rgba(111,130,255,0.12), transparent 28%),
+                linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
     color: var(--text-secondary);
     line-height: 1.6;
     min-height: 100vh;
@@ -32,19 +34,21 @@ body {
 }
 
 body.light {
-    --bg-primary: #f4f6fb;
+    --bg-primary: #f9fbff;
     --bg-secondary: #ffffff;
-    --bg-tertiary: #eef2fb;
-    --accent: #e50914;
-    --accent-hover: #ff1a1a;
-    --accent-light: #d62839;
+    --bg-tertiary: #f2f6ff;
+    --accent: #ff335f;
+    --accent-hover: #ff5577;
+    --accent-light: #ff7b9a;
     --text-primary: #0f172a;
-    --text-secondary: #1e293b;
+    --text-secondary: #1f2937;
     --text-muted: #475569;
-    --border: #d0d7e2;
+    --border: #d8e0ef;
     --shadow: rgba(15, 23, 42, 0.08);
-    --shadow-accent: rgba(229, 9, 20, 0.12);
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --shadow-accent: rgba(255, 51, 95, 0.14);
+    background: radial-gradient(circle at 15% 10%, rgba(255,51,95,0.10), transparent 30%),
+                radial-gradient(circle at 80% 0%, rgba(111,130,255,0.10), transparent 25%),
+                linear-gradient(135deg, #fdfbff 0%, #edf3ff 100%);
 }
 
 .container {
@@ -62,19 +66,35 @@ body.light {
 .theme-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.08);
+    gap: 0.55rem;
+    background: rgba(255, 255, 255, 0.12);
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     border-radius: 999px;
-    padding: 0.5rem 0.9rem;
+    padding: 0.55rem 1.15rem;
     cursor: pointer;
     transition: var(--transition);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
 }
 
 .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.18);
     transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+}
+
+.theme-toggle i {
+    color: var(--accent);
+}
+
+body.light .theme-toggle {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0,0,0,0.08);
+    color: var(--text-primary);
+}
+
+body.light .theme-toggle i {
+    color: #ff335f;
 }
 
 /* Header */

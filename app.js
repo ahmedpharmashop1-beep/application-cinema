@@ -32,6 +32,8 @@ const elements = {
     nextPage: document.getElementById('nextPage'),
     pageInfo: document.getElementById('pageInfo'),
     themeToggle: document.getElementById('themeToggle'),
+    themeLabel: document.querySelector('#themeToggle span'),
+    themeIcon: document.querySelector('#themeToggle i'),
     modalTitle: document.getElementById('modalTitle'),
     modalOverview: document.getElementById('modalOverview'),
     modalGenres: document.getElementById('modalGenres'),
@@ -481,15 +483,28 @@ function setModalMessage(message, isError = false) {
 function toggleTheme() {
     const isLight = document.body.classList.toggle('light');
     localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
+    updateThemeToggleLabel(isLight);
 }
 
 function restoreTheme() {
     const saved = localStorage.getItem(THEME_KEY) || 'dark';
     if (saved === 'light') {
         document.body.classList.add('light');
+        updateThemeToggleLabel(true);
     } else {
         document.body.classList.remove('light');
+        updateThemeToggleLabel(false);
     }
+}
+
+function updateThemeToggleLabel(isLight) {
+    if (!elements.themeLabel) return;
+    elements.themeLabel.textContent = isLight ? 'Mode clair' : 'Mode sombre';
+    if (elements.themeIcon) {
+        elements.themeIcon.classList.toggle('fa-sun', isLight);
+        elements.themeIcon.classList.toggle('fa-moon', !isLight);
+    }
+    elements.themeToggle?.setAttribute('aria-label', isLight ? 'Basculer en mode sombre' : 'Basculer en mode clair');
 }
 
 // Orchestration de la recherche / filtrage
